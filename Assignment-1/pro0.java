@@ -13,10 +13,13 @@ class Working
         System.out.println("Patients with these ID's were admitted");
         for(int i=0;i<NoOfPatient;i++)
         {
-            if(p[i].IsAdmitted() && p[i]!=null)
+            if(p[i]!=null)
             {
-                System.out.println(p[i].unid);
-                p[i]=null;
+                if(p[i].IsAdmitted())
+                {
+                    System.out.println(p[i].unid);
+                    p[i]=null;
+                }
             }
         }
     }
@@ -26,10 +29,13 @@ class Working
         System.out.println("These Hospitals were full and removed from list");
         for(int i=0;i<NoOfPatient;i++)
         {
-            if(!h[i].AcceptingApp && h[i]!=null)
+            if(h[i]!=null)
             {
-                System.out.println(h[i].name);
-                h[i]=null;
+                if(!h[i].AcceptingApp)
+                {
+                    System.out.println(h[i].name);
+                    h[i]=null;
+                }
             }
         }
     }
@@ -39,8 +45,11 @@ class Working
         int c=0;
         for(int i=0;i<h.length;i++)
         {
-            if(h[i].AcceptingApp)
-                c+=1;
+            if(h[i]!=null)
+            {
+                if(h[i].AcceptingApp)
+                    c+=1;
+            }
         }
         return c;
     }
@@ -49,16 +58,19 @@ class Working
     {
         for(int i=0;i<h.length;i++)
         {
-            if(h[i].name.equals(name))
+            if(h[i]!=null)
             {
-                System.out.println("Institute Name\t"+name);
-                System.out.println("Temperature criteria\t"+h[i].tempcriteria+"\nOxygen level criteria\t"+h[i].oxycriteria);
-                System.out.println("Number of available beds = "+h[i].nobavailable);
-                if(h[i].AcceptingApp)
-                    System.out.println("Admission Status : Accepting");
-                else
-                    System.out.println("Admission Status : Not Accepting");
-                break;
+                if(h[i].name.equals(name))
+                {
+                    System.out.println("Institute Name\t"+name);
+                    System.out.println("Temperature criteria\t"+h[i].tempcriteria+"\nOxygen level criteria\t"+h[i].oxycriteria);
+                    System.out.println("Number of available beds = "+h[i].nobavailable);
+                    if(h[i].AcceptingApp)
+                        System.out.println("Admission Status : Accepting");
+                    else
+                        System.out.println("Admission Status : Not Accepting");
+                    break;
+                }
             }
         }
 
@@ -68,17 +80,20 @@ class Working
     {
         for(int i=0;i<p.length;i++)
         {
-            if(p[i].unid==idn)
+            if(p[i]!=null)
             {
-                System.out.println("ID number : "+p[i].unid);
-                System.out.println("Temperature : "+p[i].temp);
-                System.out.println("Oxygen levels : "+p[i].oxlevel);
-                if(p[i].IsAdmitted())
+                if(p[i].unid==idn)
                 {
-                    System.out.println("The patient is admitted in "+p[i].HCName);
+                    System.out.println("ID number : "+p[i].unid);
+                    System.out.println("Temperature : "+p[i].temp);
+                    System.out.println("Oxygen levels : "+p[i].oxlevel);
+                    if(p[i].IsAdmitted())
+                    {
+                        System.out.println("The patient is admitted in "+p[i].HCName);
+                    }
+                    else
+                        System.out.println("The patient is not admitted yet");
                 }
-                else
-                    System.out.println("The patient is not admitted yet");
             }
         }
 
@@ -99,8 +114,9 @@ class Working
     {
         for(int i=0;i<NoOfPatient;i++)
         {
-            if(p[i]!=null && p[i].HCName.equals(name))
+            if(p[i]!=null)
             {
+                if(p[i].HCName.equals(name))
                 System.out.println(p[i].name+" will recover in "+p[i].RecoveryTime);
             }
         }
