@@ -10,7 +10,7 @@ class Working
 
     void RmAccPatient(Patient p[])      //query 2
     {
-        System.out.println("Patients with these ID were admitted");
+        System.out.println("Patients with these ID's were admitted");
         for(int i=0;i<NoOfPatient;i++)
         {
             if(p[i].IsAdmitted() && p[i]!=null)
@@ -34,7 +34,37 @@ class Working
         }
     }
 
+    int NoHAdmmiting(HCInstitute h[])       //query 5
+    {
+        int c=0;
+        for(int i=0;i<h.length;i++)
+        {
+            if(h[i].AcceptingApp)
+                c+=1;
+        }
+        return c;
+    }
+    void DisplayAllPatient(Patient p[])     //query 8
+    {
+        for(int i=0;i<NoOfPatient;i++)
+        {
+            if(p[i]!=null)
+            {
+                System.out.println(p[i].name+" With ID "+p[i].unid);
+            }
+        }
+    }
 
+    void DisplayNameOfPatientInH(Patient p[],String name)       //query 9
+    {
+        for(int i=0;i<NoOfPatient;i++)
+        {
+            if(p[i]!=null && p[i].HCName.equals(name))
+            {
+                System.out.println(p[i].name+" will recover in "+p[i].RecoveryTime);
+            }
+        }
+    }
 
 }
 
@@ -46,6 +76,7 @@ class Patient
     int RecoveryTime;
     float temp;
     Boolean admitted;
+    String HCName;
     Patient(String n, float temperature, int o, int a)    //constructor of our class
     {
         temp=temperature;
@@ -59,6 +90,10 @@ class Patient
     Boolean IsAdmitted()
     {
         return admitted;
+    }
+    void DisplayDetails()       //query 7
+    {
+
     }
 }
 
@@ -76,9 +111,75 @@ class HCInstitute
         tempcriteria=te;
         AcceptingApp=true;
     }
-    void onboard(Patient p[],int NoOfPat)
+    int onboard(Patient p[])
+    {
+        int r[]=new int[p.length];
+        Scanner in= new Scanner(System.in);
+        //int TotalNoP = p.length;
+        int c=0;
+        for(int i = 0; i < p.length; i++)
+        {
+            if(nobavailable>0 && p[i]!=null)
+            {
+                if(p[i].oxlevel>oxycriteria && !p[i].admitted)
+                {
+                    System.out.println("Enter Recovery time of "+p[i].name);
+                    p[i].RecoveryTime=in.nextInt();
+                    p[i].admitted=true;
+                    p[i].HCName=name;
+                    nobavailable--;
+                    r[i]=1;
+                    c=c+1;
+                }
+            }
+        }
+
+        for(int i = 0; i < p.length; i++)
+        {
+            if(nobavailable>0 && p[i]!=null)
+            {
+                if(p[i].temp<tempcriteria && !p[i].admitted)
+                {
+                    System.out.println("Enter Recovery time of "+p[i].name);
+                    p[i].RecoveryTime=in.nextInt();
+                    p[i].admitted=true;
+                    p[i].HCName=name;
+                    nobavailable--;
+                    r[i]=1;
+                    c=c+1;
+                }
+            }
+        }
+
+        if(nobavailable<1)
+            AcceptingApp=false;
+        /*Output - Display details of the institute(Recovery days for admitted patients)*/
+        System.out.println("Institute Name\t"+name);
+        System.out.println("Temperature criteria\t"+tempcriteria+"\nOxygen level criteria\t"+oxycriteria);
+        System.out.println("Number of available beds = "+nobavailable);
+        if(AcceptingApp)
+            System.out.println("Admission Status : Accepting");
+        else
+            System.out.println("Admission Status : Not Accepting");
+        for(int i=0;i<p.length;i++)
+        {
+            if(r[i]==1)
+            {
+                System.out.println(p[i].name+" Will Recover in "+p[i].RecoveryTime);
+            }
+        }
+
+        return c;
+    }
+
+    void DisplayDetails()
     {
 
+    }
+
+    Boolean IsAcceptingApp()
+    {
+        return AcceptingApp;
     }
 }
 
@@ -94,27 +195,29 @@ public class pro0 {
         Patient[] p=new Patient[N];
         HCInstitute[] h= new HCInstitute[N];
         Working w=new Working(N);
-//        for(int i=0;i<N;i++)
-//        {
-//            String name=in.next();
-//            float temp=in.nextFloat();
-//            int oxy=in.nextInt();
-//            int ag=in.nextInt();
-//            p[i]=new Patient(name,temp,oxy,ag);
-//        }
-//        for(int i=0;i<N;i++)
-//        {
-//            System.out.println(p[i].name + p[i].unid);
-//        }
-//        System.out.println(p[2].name);
+        for(int i=0;i<N;i++)
+        {
+            String name=in.next();
+            float temp=in.nextFloat();
+            int oxy=in.nextInt();
+            int ag=in.nextInt();
+            p[i]=new Patient(name,temp,oxy,ag);
+        }
+        for(int i=0;i<N;i++)
+        {
+            System.out.println(p[i].name + p[i].unid);
+        }
+        System.out.println(p[2].name);
 
         int i=0;
-//        System.out.println("keep on enter query");
+        int ad=0,left=N;
+        System.out.println("keep on enter query");
         int q=in.nextInt();
         switch (q)
         {
+
             case 1:
-                System.out.println("Enter name");
+                System.out.println("Enter name of Hospital:");
                 String n=in.next();
                 System.out.println("Enter Temperature Criteria");
                 float t=in.nextFloat();
@@ -123,13 +226,38 @@ public class pro0 {
                 System.out.println("Enter Number of Available beds");
                 int nob=in.nextInt();
                 h[i]=new HCInstitute(n,t,o,nob);
-                h[i].onboard(p,N);
+                ad =h[i].onboard(p);
+                left=left-ad;
                 break;
             case 2:
-                System.out.println("2");
+                w.RmAccPatient(p);
+                break;
+            case 3:
+                w.RmHospitals(h);
+                break;
+            case 4:
+                System.out.println("Number of patient left in camp : "+left);
+                break;
+            case 5:
+                System.out.println("The number of hospitals currently admitting = "+w.NoHAdmmiting(h));;
+                break;
+            case 6:
+                String inn=in.next();
+                w.RmHospitals(h);
+                break;
+            case 7:
+                int inid=in.nextInt();
+                w.RmHospitals(h);
+                break;
+            case 8:
+                w.DisplayAllPatient(p);
+                break;
+            case 9:
+                String hcn=in.next();
+                w.DisplayNameOfPatientInH(p,hcn);
                 break;
             default:
-                System.out.println("Default");
+                System.out.println("Please select correct query number");
         }
 
 
