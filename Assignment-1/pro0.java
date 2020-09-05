@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-class Working
+class Working       //this is the class which will handle all our queries
 {
     int NoOfPatient=0;
-    Working(int n)
+    Working(int n)          //constructor of our class
     {
         NoOfPatient=n;
     }
@@ -125,7 +125,7 @@ class Working
 
 }
 
-class Patient
+class Patient       //this is patient class, it will store all our patient data
 {
     static int un=1;
     String name;
@@ -152,7 +152,7 @@ class Patient
 
 }
 
-class HCInstitute
+class HCInstitute       //this is hospital class, it will store all our hospital data
 {
     String name;
     boolean AcceptingApp;
@@ -166,17 +166,17 @@ class HCInstitute
         tempcriteria=te;
         AcceptingApp=true;
     }
-    int onboard(Patient p[])
+    int onboard(Patient p[])        //this function solves query one
     {
         int r[]=new int[p.length];
         Scanner in= new Scanner(System.in);
         //int TotalNoP = p.length;
-        int c=0;
+        int c=0;        //this will store the number of admitted patient
         for(int i = 0; i < p.length; i++)
         {
             if(nobavailable>0 && p[i]!=null)
             {
-                if(p[i].oxlevel>=oxycriteria && !p[i].admitted)
+                if(p[i].oxlevel>=oxycriteria && !p[i].admitted)     //here we check for oxygen level
                 {
                     System.out.println("Enter Recovery time of "+p[i].name);
                     p[i].RecoveryTime=in.nextInt();
@@ -193,7 +193,7 @@ class HCInstitute
         {
             if(nobavailable>0 && p[i]!=null)
             {
-                if(p[i].temp<=tempcriteria && !p[i].admitted)
+                if(p[i].temp<=tempcriteria && !p[i].admitted)       //here we check for temperature creteria
                 {
                     System.out.println("Enter Recovery time of "+p[i].name);
                     p[i].RecoveryTime=in.nextInt();
@@ -251,18 +251,14 @@ public class pro0 {
             float temp=in.nextFloat();
             int oxy=in.nextInt();
             int ag=in.nextInt();
-            p[i]=new Patient(name,temp,oxy,ag);
+            p[i]=new Patient(name,temp,oxy,ag);     //storing data in patient class
         }
-//        for(int i=0;i<N;i++)
-//        {
-//            System.out.println(p[i].name + p[i].unid);
-//        }
-//        System.out.println(p[2].name);
 
-        int i=0;
+
+        int i=0;        //this will store number of hospitals-1
         int ad=0,left=N;
 
-        while(left>0)
+        while(left>0)       //loop will work till there are no patient left
         {
             System.out.println("Enter query number : ");
             int q=in.nextInt();
@@ -317,4 +313,4 @@ public class pro0 {
 
 
     }
-}
+}       //this contains our main class
