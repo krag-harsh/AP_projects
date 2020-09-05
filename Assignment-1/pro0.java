@@ -115,10 +115,11 @@ class Working
         for(int i=0;i<NoOfPatient;i++)
         {
             if(p[i]!=null)
-            {
-                if(p[i].HCName.equals(name))
-                System.out.println(p[i].name+" will recover in "+p[i].RecoveryTime);
-            }
+                if(p[i].IsAdmitted())
+                {
+                    if (p[i].HCName.equals(name))
+                        System.out.println(p[i].name + " will recover in " + p[i].RecoveryTime + " days");
+                }
         }
     }
 
@@ -126,7 +127,7 @@ class Working
 
 class Patient
 {
-    static int un=1000;
+    static int un=1;
     String name;
     int age,unid,oxlevel;
     int RecoveryTime;
@@ -175,7 +176,7 @@ class HCInstitute
         {
             if(nobavailable>0 && p[i]!=null)
             {
-                if(p[i].oxlevel>oxycriteria && !p[i].admitted)
+                if(p[i].oxlevel>=oxycriteria && !p[i].admitted)
                 {
                     System.out.println("Enter Recovery time of "+p[i].name);
                     p[i].RecoveryTime=in.nextInt();
@@ -192,7 +193,7 @@ class HCInstitute
         {
             if(nobavailable>0 && p[i]!=null)
             {
-                if(p[i].temp<tempcriteria && !p[i].admitted)
+                if(p[i].temp<=tempcriteria && !p[i].admitted)
                 {
                     System.out.println("Enter Recovery time of "+p[i].name);
                     p[i].RecoveryTime=in.nextInt();
@@ -279,6 +280,7 @@ public class pro0 {
                     int nob=in.nextInt();
                     h[i]=new HCInstitute(n,t,o,nob);
                     ad =h[i].onboard(p);
+                    i++;
                     left=left-ad;
                     break;
                 case 2:
