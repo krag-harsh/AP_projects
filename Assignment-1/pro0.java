@@ -44,6 +44,46 @@ class Working
         }
         return c;
     }
+
+    void DisplayHDetails(String name,HCInstitute h[])       //query 6
+    {
+        for(int i=0;i<h.length;i++)
+        {
+            if(h[i].name.equals(name))
+            {
+                System.out.println("Institute Name\t"+name);
+                System.out.println("Temperature criteria\t"+h[i].tempcriteria+"\nOxygen level criteria\t"+h[i].oxycriteria);
+                System.out.println("Number of available beds = "+h[i].nobavailable);
+                if(h[i].AcceptingApp)
+                    System.out.println("Admission Status : Accepting");
+                else
+                    System.out.println("Admission Status : Not Accepting");
+                break;
+            }
+        }
+
+    }
+
+    void DisplayPatientDetails(int idn, Patient p[])    //query 7
+    {
+        for(int i=0;i<p.length;i++)
+        {
+            if(p[i].unid==idn)
+            {
+                System.out.println("ID number : "+p[i].unid);
+                System.out.println("Temperature : "+p[i].temp);
+                System.out.println("Oxygen levels : "+p[i].oxlevel);
+                if(p[i].IsAdmitted())
+                {
+                    System.out.println("The patient is admitted in "+p[i].HCName);
+                }
+                else
+                    System.out.println("The patient is not admitted yet");
+            }
+        }
+
+    }
+
     void DisplayAllPatient(Patient p[])     //query 8
     {
         for(int i=0;i<NoOfPatient;i++)
@@ -87,14 +127,12 @@ class Patient
         un++;
         admitted=false;
     }
+
     Boolean IsAdmitted()
     {
         return admitted;
     }
-    void DisplayDetails()       //query 7
-    {
 
-    }
 }
 
 class HCInstitute
@@ -172,11 +210,6 @@ class HCInstitute
         return c;
     }
 
-    void DisplayDetails()
-    {
-
-    }
-
     Boolean IsAcceptingApp()
     {
         return AcceptingApp;
@@ -203,61 +236,65 @@ public class pro0 {
             int ag=in.nextInt();
             p[i]=new Patient(name,temp,oxy,ag);
         }
-        for(int i=0;i<N;i++)
-        {
-            System.out.println(p[i].name + p[i].unid);
-        }
-        System.out.println(p[2].name);
+//        for(int i=0;i<N;i++)
+//        {
+//            System.out.println(p[i].name + p[i].unid);
+//        }
+//        System.out.println(p[2].name);
 
         int i=0;
         int ad=0,left=N;
-        System.out.println("keep on enter query");
-        int q=in.nextInt();
-        switch (q)
-        {
 
-            case 1:
-                System.out.println("Enter name of Hospital:");
-                String n=in.next();
-                System.out.println("Enter Temperature Criteria");
-                float t=in.nextFloat();
-                System.out.println("Enter Oxygen Levels Criteria");
-                int o=in.nextInt();
-                System.out.println("Enter Number of Available beds");
-                int nob=in.nextInt();
-                h[i]=new HCInstitute(n,t,o,nob);
-                ad =h[i].onboard(p);
-                left=left-ad;
-                break;
-            case 2:
-                w.RmAccPatient(p);
-                break;
-            case 3:
-                w.RmHospitals(h);
-                break;
-            case 4:
-                System.out.println("Number of patient left in camp : "+left);
-                break;
-            case 5:
-                System.out.println("The number of hospitals currently admitting = "+w.NoHAdmmiting(h));;
-                break;
-            case 6:
-                String inn=in.next();
-                w.RmHospitals(h);
-                break;
-            case 7:
-                int inid=in.nextInt();
-                w.RmHospitals(h);
-                break;
-            case 8:
-                w.DisplayAllPatient(p);
-                break;
-            case 9:
-                String hcn=in.next();
-                w.DisplayNameOfPatientInH(p,hcn);
-                break;
-            default:
-                System.out.println("Please select correct query number");
+        while(left>0)
+        {
+            System.out.println("Enter query number : ");
+            int q=in.nextInt();
+            switch (q)
+            {
+
+                case 1:
+                    System.out.println("Enter name of Hospital:");
+                    String n=in.next();
+                    System.out.println("Enter Temperature Criteria");
+                    float t=in.nextFloat();
+                    System.out.println("Enter Oxygen Levels Criteria");
+                    int o=in.nextInt();
+                    System.out.println("Enter Number of Available beds");
+                    int nob=in.nextInt();
+                    h[i]=new HCInstitute(n,t,o,nob);
+                    ad =h[i].onboard(p);
+                    left=left-ad;
+                    break;
+                case 2:
+                    w.RmAccPatient(p);
+                    break;
+                case 3:
+                    w.RmHospitals(h);
+                    break;
+                case 4:
+                    System.out.println("Number of patient left in camp : "+left);
+                    break;
+                case 5:
+                    System.out.println("The number of hospitals currently admitting = "+w.NoHAdmmiting(h));;
+                    break;
+                case 6:
+                    String inn=in.next();
+                    w.DisplayHDetails(inn,h);
+                    break;
+                case 7:
+                    int inid=in.nextInt();
+                    w.DisplayPatientDetails(inid,p);
+                    break;
+                case 8:
+                    w.DisplayAllPatient(p);
+                    break;
+                case 9:
+                    String hcn=in.next();
+                    w.DisplayNameOfPatientInH(p,hcn);
+                    break;
+                default:
+                    System.out.println("Please select correct query number");
+            }
         }
 
 
