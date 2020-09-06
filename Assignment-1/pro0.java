@@ -1,5 +1,3 @@
-//HARSH KUMAR AGARWAL
-//2019423  CSB
 //ASSIGNMENT 1 - AP
 
 import java.util.Scanner;
