@@ -1,14 +1,18 @@
+//HARSH KUMAR AGARWAL
+//2019423  CSB
+//ASSIGNMENT 1 - AP
+
 import java.util.Scanner;
 
 class Working       //this is the class which will handle all our queries
 {
-    int NoOfPatient=0;
+    int NoOfPatient;
     Working(int n)          //constructor of our class
     {
         NoOfPatient=n;
     }
 
-    void RmAccPatient(Patient p[])      //query 2
+    void RmAccPatient(Patient[] p)      //query 2
     {
         System.out.println("Patients with these ID's were admitted");
         for(int i=0;i<NoOfPatient;i++)
@@ -24,7 +28,7 @@ class Working       //this is the class which will handle all our queries
         }
     }
 
-    void RmHospitals(HCInstitute h[])       //query 3
+    void RmHospitals(HCInstitute[] h)       //query 3
     {
         System.out.println("These Hospitals were full and removed from list");
         for(int i=0;i<NoOfPatient;i++)
@@ -40,32 +44,27 @@ class Working       //this is the class which will handle all our queries
         }
     }
 
-    int NoHAdmmiting(HCInstitute h[])       //query 5
+    int NoHAdmmiting(HCInstitute[] h)       //query 5
     {
         int c=0;
-        for(int i=0;i<h.length;i++)
-        {
-            if(h[i]!=null)
-            {
-                if(h[i].AcceptingApp)
-                    c+=1;
+        for (HCInstitute hcInstitute : h) {
+            if (hcInstitute != null) {
+                if (hcInstitute.AcceptingApp)
+                    c += 1;
             }
         }
         return c;
     }
 
-    void DisplayHDetails(String name,HCInstitute h[])       //query 6
+    void DisplayHDetails(String name, HCInstitute[] h)       //query 6
     {
-        for(int i=0;i<h.length;i++)
-        {
-            if(h[i]!=null)
-            {
-                if(h[i].name.equals(name))
-                {
-                    System.out.println("Institute Name\t"+name);
-                    System.out.println("Temperature criteria\t"+h[i].tempcriteria+"\nOxygen level criteria\t"+h[i].oxycriteria);
-                    System.out.println("Number of available beds = "+h[i].nobavailable);
-                    if(h[i].AcceptingApp)
+        for (HCInstitute hcInstitute : h) {
+            if (hcInstitute != null) {
+                if (hcInstitute.name.equals(name)) {
+                    System.out.println("Institute Name\t" + name);
+                    System.out.println("Temperature criteria\t" + hcInstitute.tempcriteria + "\nOxygen level criteria\t" + hcInstitute.oxycriteria);
+                    System.out.println("Number of available beds = " + hcInstitute.nobavailable);
+                    if (hcInstitute.AcceptingApp)
                         System.out.println("Admission Status : Accepting");
                     else
                         System.out.println("Admission Status : Not Accepting");
@@ -76,22 +75,17 @@ class Working       //this is the class which will handle all our queries
 
     }
 
-    void DisplayPatientDetails(int idn, Patient p[])    //query 7
+    void DisplayPatientDetails(int idn, Patient[] p)    //query 7
     {
-        for(int i=0;i<p.length;i++)
-        {
-            if(p[i]!=null)
-            {
-                if(p[i].unid==idn)
-                {
-                    System.out.println("ID number : "+p[i].unid);
-                    System.out.println("Temperature : "+p[i].temp);
-                    System.out.println("Oxygen levels : "+p[i].oxlevel);
-                    if(p[i].IsAdmitted())
-                    {
-                        System.out.println("The patient is admitted in "+p[i].HCName);
-                    }
-                    else
+        for (Patient patient : p) {
+            if (patient != null) {
+                if (patient.unid == idn) {
+                    System.out.println("ID number : " + patient.unid);
+                    System.out.println("Temperature : " + patient.temp);
+                    System.out.println("Oxygen levels : " + patient.oxlevel);
+                    if (patient.IsAdmitted()) {
+                        System.out.println("The patient is admitted in " + patient.HCName);
+                    } else
                         System.out.println("The patient is not admitted yet");
                 }
             }
@@ -99,7 +93,7 @@ class Working       //this is the class which will handle all our queries
 
     }
 
-    void DisplayAllPatient(Patient p[])     //query 8
+    void DisplayAllPatient(Patient[] p)     //query 8
     {
         for(int i=0;i<NoOfPatient;i++)
         {
@@ -110,7 +104,7 @@ class Working       //this is the class which will handle all our queries
         }
     }
 
-    void DisplayNameOfPatientInH(Patient p[],String name)       //query 9
+    void DisplayNameOfPatientInH(Patient[] p, String name)       //query 9
     {
         for(int i=0;i<NoOfPatient;i++)
         {
@@ -128,12 +122,12 @@ class Working       //this is the class which will handle all our queries
 class Patient       //this is patient class, it will store all our patient data
 {
     static int un=1;
-    String name;
-    int age,unid,oxlevel;
-    int RecoveryTime;
-    float temp;
-    Boolean admitted;
-    String HCName;
+    protected String name;
+    protected int age,unid,oxlevel;
+    protected int RecoveryTime;
+    protected float temp;
+    protected Boolean admitted;
+    protected String HCName;
     Patient(String n, float temperature, int o, int a)    //constructor of our class
     {
         temp=temperature;
@@ -154,10 +148,10 @@ class Patient       //this is patient class, it will store all our patient data
 
 class HCInstitute       //this is hospital class, it will store all our hospital data
 {
-    String name;
-    boolean AcceptingApp;
-    float tempcriteria;
-    int nobavailable,oxycriteria;
+    protected String name;
+    protected boolean AcceptingApp;
+    protected float tempcriteria;
+    protected int nobavailable,oxycriteria;
     HCInstitute(String n, float te, int oxl, int nob)
     {
         name=n;
@@ -166,9 +160,9 @@ class HCInstitute       //this is hospital class, it will store all our hospital
         tempcriteria=te;
         AcceptingApp=true;
     }
-    int onboard(Patient p[])        //this function solves query one
+    int onboard(Patient[] p)        //this function solves query one
     {
-        int r[]=new int[p.length];
+        int[] r =new int[p.length];
         Scanner in= new Scanner(System.in);
         //int TotalNoP = p.length;
         int c=0;        //this will store the number of admitted patient
@@ -178,7 +172,7 @@ class HCInstitute       //this is hospital class, it will store all our hospital
             {
                 if(p[i].oxlevel>=oxycriteria && !p[i].admitted)     //here we check for oxygen level
                 {
-                    System.out.println("Enter Recovery time of "+p[i].name);
+                    System.out.println("Enter Recovery time of patient ID "+p[i].unid);
                     p[i].RecoveryTime=in.nextInt();
                     p[i].admitted=true;
                     p[i].HCName=name;
@@ -227,15 +221,16 @@ class HCInstitute       //this is hospital class, it will store all our hospital
         return c;
     }
 
-    Boolean IsAcceptingApp()
-    {
-        return AcceptingApp;
-    }
+//    Boolean IsAcceptingApp()
+//    {
+//        return AcceptingApp;
+//    }
 }
 
 
 
-public class pro0 {
+public class pro0       //this class contains our main class
+{
 
     public static void main(String[] args)
     {
@@ -256,7 +251,7 @@ public class pro0 {
 
 
         int i=0;        //this will store number of hospitals-1
-        int ad=0,left=N;
+        int ad,left=N;
 
         while(left>0)       //loop will work till there are no patient left
         {
@@ -289,7 +284,7 @@ public class pro0 {
                     System.out.println("Number of patient left in camp : "+left);
                     break;
                 case 5:
-                    System.out.println("The number of hospitals currently admitting = "+w.NoHAdmmiting(h));;
+                    System.out.println("The number of hospitals currently admitting = "+w.NoHAdmmiting(h));
                     break;
                 case 6:
                     String inn=in.next();
@@ -313,4 +308,4 @@ public class pro0 {
 
 
     }
-}       //this contains our main class
+}
