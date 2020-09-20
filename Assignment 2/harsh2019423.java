@@ -3,28 +3,73 @@ import java.util.Scanner;
 
 class User
 {
-    String name,address;
+    private String name,address;
+    void setdata(String s1, String s2)
+    {
+        this.name=s1;
+        this.address=s2;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
+
+
+
+
 
 class Customer extends User
 {
     private float wallet,rewardPoints,bill;
+    void setnameadd(String s1, String s2)
+    {
+        super.setdata(s1,s2);
+    }
+
 }
 
+class NormalC extends Customer{
+    @Override
+    public String toString() {
+        return(this.getName());
+    }
+
+}
 class EliteC extends Customer{
+    @Override
+    public String toString() {
+        return(this.getName()+" (Elite)");
+    }
 
 }
-
 class SpecialC extends Customer{
+    @Override
+    public String toString() {
+        return(this.getName()+" (Special)");
+    }
 
 }
 
-class restaurants extends User
+
+
+
+
+
+
+
+
+class restaurant extends User
 {
     Scanner in=new Scanner(System.in);
     HashMap<Integer,Food> fooditem= new HashMap<Integer, Food>();
     float rewardPoints,Bill;
-    int discount;
+    int discount; //keep it 0 or set according to query 4
+
+    void setnameadd(String s1, String s2)
+    {
+        super.setdata(s1,s2);
+    }
 
     void addfood()
     {
@@ -58,7 +103,44 @@ class restaurants extends User
 
     }
 
+    void preward()
+    {
+        System.out.println("Reward points claimed by customers till now: "+rewardPoints);
+    }
+
+    void setthediscount()
+    {
+        System.out.println("Enter the percentage discount your restaurant give on final bill");
+    }
+
+
 }
+
+class FastFoodR extends restaurant{
+    @Override
+    public String toString() {
+        return(this.getName()+" (Fast Food)");
+    }
+}
+
+class AuthenticR extends restaurant{
+    @Override
+    public String toString() {
+        return(this.getName()+" ( Authentic Restaurant)");
+    }
+
+}
+
+class NormalR extends restaurant{
+    @Override
+    public String toString() {
+        return(this.getName());
+    }
+
+}
+
+
+
 
 
 
@@ -70,8 +152,9 @@ public class harsh2019423 {
     {
         Scanner in=new Scanner(System.in);
         System.out.println("First line");
-        Food f=new Food("har",12,32,1,5);
+        Food f=new Food("Idli",12,32,1,5);
         System.out.println(f);
 
+        
     }
 }
