@@ -4,11 +4,13 @@ public class WorkingC {
     restaurant r[];
     Customer c[];
     restaurant selectedres;
-    int i,j;  //index of customer and restaurant selected
-    WorkingC(Customer[] c,restaurant[] r)
+    working w;
+    int i,j,totalquantity=0;  //index of customer and restaurant selected
+    WorkingC(Customer[] c,restaurant[] r, working w)
     {
         this.r=r;
         this.c=c;
+        this.w=w;
     }
 
     void selectresanditem()
@@ -32,15 +34,96 @@ public class WorkingC {
         System.out.println("Enter item quantity");
         int quantity=in.nextInt();
         c[i].setcartandquantity(selectedres.fooditem.get(unc),quantity,index);
-        c[i].setNumberofitemincart(c[i].getNumberofitemincart()+1);
+        //c[i].setNumberofitemincart(c[i].getNumberofitemincart()+1);
         index=(index+1)%10;
         c[i].setCartindex(index);
-        //c[i].fooditem.put(unc,selectedres.fooditem.get(unc));
 
+
+    }
+
+    float billwithoutdiscounts(Food[] f,int[] qua,int numberofitem)
+    {
+        float value=0;
+        for(int t=0;t<numberofitem;t++)
+        {
+            System.out.println(f[t]);
+            float indvalue=(f[t].getPrice()*qua[t])*(100-f[t].getOffer())/100;
+            totalquantity+=qua[t];
+            value+=indvalue;
+        }
+        return value;
+    }
+    void deleteitemsfromlist(Food[] f, int[] qua, int numberofitem)
+    {
+        Scanner in=new Scanner(System.in);
+        for(int t=0;t<numberofitem;t++)
+        {
+            System.out.println((t+1)+" "+f[t]);
+        }
+        System.out.println("Enter the index to delete");
+        int c=in.nextInt();
+        c--;
+        qua[c]=0;
+    }
+    void updateafterpayment(float paytoapp,Customer indc,restaurant indr,float rewardcollectedinthisorder,float backupbill,int deliverycharges)
+    {
+        indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
+        indr.setRewardpoints(indr.getRewardpoints()+rewardcollectedinthisorder);
+        lastorder l=new lastorder(indr.getName(),totalquantity,backupbill,deliverycharges);
+        totalquantity=0;
+
+        w.setDeliverychargecollected(w.getDeliverychargecollected()+deliverycharges);
+        w.setTotalbalance(w.getTotalbalance()+paytoapp);
     }
 
     void checkoutcart(Customer indc, restaurant indr)
     {
+        Scanner in=new Scanner(System.in);
+        float bill=0,rewardcollectedinthisorder;
+        bill=this.billwithoutdiscounts(indc.getCart(),indc.getQuantity(),indc.getCartindex());
+        bill=indr.DiscR(bill);
+        bill-=indc.DiscC(bill);
+        float paytoapp=bill/100;
+        int deliverycharges=indc.getdeliverycharges();
+        rewardcollectedinthisorder=indr.getreward(bill);
+
+
+        System.out.println("Delivery charges - "+deliverycharges);
+        System.out.println("Total order value : "+bill);
+        System.out.println("Enter 1 to checkout : ");
+        int choice=in.nextInt();
+        float backupbill=0;
+        if(choice==1)
+        {
+            //System.out.println("You earned : "+rewardcollectedinthisorder+" reward points");
+
+            if(indc.getRewardpoints()+indc.getWallet()+rewardcollectedinthisorder>=bill+deliverycharges)
+            {
+                System.out.println("Items successfully bought for INR : "+bill+deliverycharges);
+                backupbill=bill;
+                bill=bill+deliverycharges;
+                bill=bill-indc.getRewardpoints()-rewardcollectedinthisorder;
+                indc.setRewardpoints(0);
+                indc.setWallet(indc.getWallet()-bill);
+
+
+                updateafterpayment(paytoapp,indc,indr,rewardcollectedinthisorder,backupbill,deliverycharges);
+
+//                indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
+//                indr.setRewardpoints(indr.getRewardpoints()+rewardcollectedinthisorder);
+//                lastorder l=new lastorder(indr.getName(),totalquantity,backupbill,deliverycharges);
+
+            }
+            else
+            {
+                totalquantity=0;
+                System.out.println("You have insufficient balance please delete some item and check again for items");
+                deleteitemsfromlist(indc.getCart(),indc.getQuantity(),indc.getCartindex());
+                checkoutcart(indc,indr);
+            }
+        }
+        else
+            System.out.println("Going back");
 
 
     }

@@ -34,7 +34,7 @@ public class WorkingR {
                 case 2:r[i].editfood();
                     break;
                 case 3:
-                    System.out.println("Reward points - "+r[i].getRewardPoints());
+                    System.out.println("Reward points - "+r[i].getRewardpoints());
                     break;
                 case 4:r[i].setthediscount();
                     break;
