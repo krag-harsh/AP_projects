@@ -32,9 +32,46 @@ class User
 class Customer extends User
 {
     private float wallet,rewardPoints,bill;
+    private lastorder li[]=new lastorder[10];
+    private Food[] cart=new Food[10];
+    private int[] quantity= new int[10];
+    private int cartindex,numberoforder,numberofitemincart;
+
     void setnameadd(String s1, String s2)
     {
         super.setdata(s1,s2);
+        numberoforder=0;
+        cartindex=0;
+        wallet=1000;
+        rewardPoints=0;
+        numberofitemincart=0;
+    }
+
+    public int getNumberofitemincart() {
+        return numberofitemincart;
+    }
+
+    public void setNumberofitemincart(int numberofitemincart) {
+        this.numberofitemincart = numberofitemincart;
+    }
+
+    public int getCartindex() {
+        return cartindex;
+    }
+
+    public void setCartindex(int cartindex) {
+        this.cartindex = cartindex;
+    }
+
+    void setcartandquantity(Food f, int qua, int index)
+    {
+        cart[index]=f;
+        quantity[index]=qua;
+    }
+
+
+    public lastorder[] getLi() {
+        return li;
     }
 
 }
@@ -175,22 +212,26 @@ class restaurant extends User
 
     }
 
-    void preward()
-    {
-        System.out.println("Reward points claimed by customers till now: "+rewardPoints);
-    }
-
     void setthediscount()
     {
-        System.out.println("Enter the percentage discount your restaurant give on final bill");
-        int i=in.nextInt();
-        setDiscount(i);
+        System.out.println("Sorry the restaurant do not provide discount on final bill");
+        //int i=in.nextInt();
+//        setDiscount(i);
     }
 
 
 }
 
 class FastFoodR extends restaurant{
+    Scanner in=new Scanner(System.in);
+    @Override
+    void setthediscount()
+    {
+        System.out.println("Enter discount on bill value - ");
+        int i=in.nextInt();
+        setDiscount(i);
+    }
+
     float DiscR(float a)
     {
         int d=getDiscount();
@@ -208,6 +249,14 @@ class FastFoodR extends restaurant{
 }
 
 class AuthenticR extends restaurant{
+    Scanner in=new Scanner(System.in);
+    @Override
+    void setthediscount()
+    {
+        System.out.println("Enter discount on bill value - ");
+        int i=in.nextInt();
+        setDiscount(i);
+    }
     float DiscR(float a)
     {
         int d=getDiscount();
@@ -230,6 +279,14 @@ class AuthenticR extends restaurant{
 }
 
 class NormalR extends restaurant{
+    //Scanner in=new Scanner(System.in);
+    @Override
+    void setthediscount()
+    {
+        System.out.println("Sorry the restaurant do not provide discount on final bill");
+        //int i=in.nextInt();
+        //setDiscount(i);
+    }
     float DiscR(float a)
     {
         return a;
@@ -288,7 +345,7 @@ public class harsh2019423 {
                     "\t5) Exit\n");
             q=in.nextInt();
             WorkingR wr=new WorkingR(R);
-            WorkingC wc=new WorkingC(C);
+            WorkingC wc=new WorkingC(C,R);
             switch (q)
             {
                 case 1:
