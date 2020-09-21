@@ -30,6 +30,15 @@ class Customer extends User
 }
 
 class NormalC extends Customer{
+    NormalC(String name, String add)
+    {
+        super.setnameadd(name,add);
+    }
+
+    float DiscC()
+    {
+        return 0;
+    }
     @Override
     public String toString() {
         return(this.getName());
@@ -37,6 +46,16 @@ class NormalC extends Customer{
 
 }
 class EliteC extends Customer{
+    EliteC(String name, String add)
+    {
+        super.setnameadd(name,add);
+    }
+
+    float DiscC()
+    {
+        return 0;
+    }
+
     @Override
     public String toString() {
         return(this.getName()+" (Elite)");
@@ -44,6 +63,16 @@ class EliteC extends Customer{
 
 }
 class SpecialC extends Customer{
+    SpecialC(String name, String add)
+    {
+        super.setnameadd(name,add);
+    }
+
+    float DiscC()
+    {
+        return 0;
+    }
+
     @Override
     public String toString() {
         return(this.getName()+" (Special)");
@@ -63,12 +92,31 @@ class restaurant extends User
 {
     Scanner in=new Scanner(System.in);
     HashMap<Integer,Food> fooditem= new HashMap<Integer, Food>();
-    float rewardPoints,Bill;
+    private float rewardPoints,Bill;
     int discount; //keep it 0 or set according to query 4
 
-    void setnameadd(String s1, String s2)
+    void setnameadd(String s1, String s2,int r)
     {
         super.setdata(s1,s2);
+        this.discount=r;
+        rewardPoints=0;
+        Bill=0;
+    }
+
+    public float getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public void setRewardPoints(float rewardPoints) {
+        this.rewardPoints = rewardPoints;
+    }
+
+    public float getBill() {
+        return Bill;
+    }
+
+    public void setBill(float bill) {
+        Bill = bill;
     }
 
     void addfood()
@@ -79,7 +127,7 @@ class restaurant extends User
         int p=in.nextInt();
         System.out.println("Its quantity : ");
         int q=in.nextInt();
-        System.out.println("Its category:\n1 for Starter\n2 for Main Course\n3 for Dessert\n 4 for Beverage: ");
+        System.out.println("Its category:\n1 for Starter\n2 for Main Course\n3 for Dessert\n4 for Beverage: ");
         int c=in.nextInt();
         System.out.println("offer(enter 0 if none) : ");
         int o=in.nextInt();
@@ -93,7 +141,7 @@ class restaurant extends User
     {
         for (int f : fooditem.keySet())
         {
-            System.out.println(fooditem.get(f));
+            System.out.println(f+" " +fooditem.get(f));
         }
         System.out.println("Enter unique id you want to edit");
         int id=in.nextInt();
@@ -117,6 +165,10 @@ class restaurant extends User
 }
 
 class FastFoodR extends restaurant{
+    FastFoodR(String name, String add, int r)
+    {
+        super.setnameadd(name,add,r);
+    }
     @Override
     public String toString() {
         return(this.getName()+" (Fast Food)");
@@ -124,6 +176,10 @@ class FastFoodR extends restaurant{
 }
 
 class AuthenticR extends restaurant{
+    AuthenticR(String name, String add, int r)
+    {
+        super.setnameadd(name,add,0);
+    }
     @Override
     public String toString() {
         return(this.getName()+" ( Authentic Restaurant)");
@@ -132,6 +188,10 @@ class AuthenticR extends restaurant{
 }
 
 class NormalR extends restaurant{
+    NormalR(String name, String add, int r)
+    {
+        super.setnameadd(name,add,0);
+    }
     @Override
     public String toString() {
         return(this.getName());
@@ -155,6 +215,48 @@ public class harsh2019423 {
         Food f=new Food("Idli",12,32,1,5);
         System.out.println(f);
 
-        
+        //User[] U =new User[10];
+        Customer[] C= new Customer[5];
+        restaurant[] R=new restaurant[5];
+        C[0]=new EliteC("Ram","Delhi");
+        C[1]=new EliteC("Sam","Delhi");
+        C[2]=new SpecialC("Tim","Delhi");
+        C[3]=new NormalC("Kim","Delhi");
+        C[4]=new NormalC("Jim","Delhi");
+
+        R[0]=new AuthenticR("Shah","Delhi",3);
+        R[1]=new NormalR("Ravi's","Delhi",0);
+        R[2]=new AuthenticR("The Chinese","Delhi",3);
+        R[3]=new FastFoodR("Wang's","Delhi",4);
+        R[4]=new NormalR("Paradise","Delhi",0);
+
+        int q;
+
+        do {
+            System.out.println("Welcome to Zotato:\n" +
+                    "\t1) Enter as Restaurant Owner\n" +
+                    "\t2) Enter as Customer\n" +
+                    "\t3) Check User Details\n" +
+                    "\t4) Company Account details\n" +
+                    "\t5) Exit\n");
+            q=in.nextInt();
+            switch (q)
+            {
+                case 1:
+                    WorkingR wr=new WorkingR(R);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    System.out.println("-----Thanks for using the application-----");
+                    break;
+            }
+
+        }while (q>0 && q<5);
+
     }
 }
