@@ -1,8 +1,14 @@
 import java.util.Scanner;
 
 public class WorkingR {
+    restaurant[] r;
 
     WorkingR(restaurant[] r)
+    {
+        this.r=r;
+    }
+
+    void Rmenu()
     {
         Scanner in=new Scanner(System.in);
         System.out.println("Choose Restaurant");
@@ -36,6 +42,7 @@ public class WorkingR {
                     break;
             }
         }while (q>0 && q<5);
-
     }
+
+
 }

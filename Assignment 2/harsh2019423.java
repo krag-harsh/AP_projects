@@ -4,14 +4,24 @@ import java.util.Scanner;
 class User
 {
     private String name,address;
+    private float rewardpoints;
+
     void setdata(String s1, String s2)
     {
         this.name=s1;
         this.address=s2;
+        rewardpoints=0;
     }
 
     public String getName() {
         return name;
+    }
+    public float getRewardpoints() {
+        return rewardpoints;
+    }
+
+    public void setRewardpoints(float rewardpoints) {
+        this.rewardpoints = rewardpoints;
     }
 }
 
@@ -35,9 +45,9 @@ class NormalC extends Customer{
         super.setnameadd(name,add);
     }
 
-    float DiscC()
+    float DiscC(float a)
     {
-        return 0;
+        return (a+40);
     }
     @Override
     public String toString() {
@@ -51,9 +61,12 @@ class EliteC extends Customer{
         super.setnameadd(name,add);
     }
 
-    float DiscC()
+    float DiscC(float a)
     {
-        return 0;
+        if(a>200)
+            return (a-50);
+        else
+            return a;
     }
 
     @Override
@@ -68,9 +81,12 @@ class SpecialC extends Customer{
         super.setnameadd(name,add);
     }
 
-    float DiscC()
+    float DiscC(float a)
     {
-        return 0;
+        if(a>200)
+            return(a+5);
+        else
+            return(a+20);
     }
 
     @Override
@@ -93,9 +109,17 @@ class restaurant extends User
     Scanner in=new Scanner(System.in);
     HashMap<Integer,Food> fooditem= new HashMap<Integer, Food>();
     private float rewardPoints,Bill;
-    int discount; //keep it 0 or set according to query 4
+    private int discount; //keep it 0 or set according to query 4
 
-    void setnameadd(String s1, String s2,int r)
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    void setnameadd(String s1, String s2, int r)
     {
         super.setdata(s1,s2);
         this.discount=r;
@@ -159,12 +183,20 @@ class restaurant extends User
     void setthediscount()
     {
         System.out.println("Enter the percentage discount your restaurant give on final bill");
+        int i=in.nextInt();
+        setDiscount(i);
     }
 
 
 }
 
 class FastFoodR extends restaurant{
+    float DiscR(float a)
+    {
+        int d=getDiscount();
+        return ((100-d)/100)*a;
+
+    }
     FastFoodR(String name, String add, int r)
     {
         super.setnameadd(name,add,r);
@@ -176,6 +208,16 @@ class FastFoodR extends restaurant{
 }
 
 class AuthenticR extends restaurant{
+    float DiscR(float a)
+    {
+        int d=getDiscount();
+        float c= ((100-d)/100)*a;
+        if(c>100)
+            return c-50;
+        else
+            return c;
+    }
+
     AuthenticR(String name, String add, int r)
     {
         super.setnameadd(name,add,0);
@@ -188,6 +230,11 @@ class AuthenticR extends restaurant{
 }
 
 class NormalR extends restaurant{
+    float DiscR(float a)
+    {
+        return a;
+    }
+
     NormalR(String name, String add, int r)
     {
         super.setnameadd(name,add,0);
@@ -240,12 +287,15 @@ public class harsh2019423 {
                     "\t4) Company Account details\n" +
                     "\t5) Exit\n");
             q=in.nextInt();
+            WorkingR wr=new WorkingR(R);
+            WorkingC wc=new WorkingC(C);
             switch (q)
             {
                 case 1:
-                    WorkingR wr=new WorkingR(R);
+                    wr.Rmenu();
                     break;
                 case 2:
+                    wc.Cmenu();
                     break;
                 case 3:
                     break;
