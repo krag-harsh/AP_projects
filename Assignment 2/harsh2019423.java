@@ -52,6 +52,14 @@ class Customer extends User
         //numberofitemincart=0;
     }
 
+    public int getNumberoforder() {
+        return numberoforder;
+    }
+
+    public void setNumberoforder() {
+        this.numberoforder++;
+    }
+
     public int getdeliverycharges()
     {
         return 40;
@@ -104,6 +112,9 @@ class Customer extends User
         return li;
     }
 
+    public void setLi(lastorder[] li) {
+        this.li = li;
+    }
 }
 
 class NormalC extends Customer{
@@ -120,7 +131,7 @@ class NormalC extends Customer{
     @Override
     float DiscC(float a)
     {
-        return (0);
+        return (float) 0.0;
     }
     @Override
     public String toString() {
@@ -143,9 +154,9 @@ class EliteC extends Customer{
     float DiscC(float a)
     {
         if(a>200)
-            return (50);
+            return (float) 50.0;
         else
-            return 0;
+            return (float) 0.0;
     }
 
     @Override
@@ -169,9 +180,9 @@ class SpecialC extends Customer{
     float DiscC(float a)
     {
         if(a>200)
-            return(25);
+            return (float) 25.0;
         else
-            return 0;
+            return (float) 0.0;
     }
 
     @Override
@@ -192,7 +203,7 @@ class SpecialC extends Customer{
 class restaurant extends User
 {
     Scanner in=new Scanner(System.in);
-    HashMap<Integer,Food> fooditem= new HashMap<Integer, Food>();
+    HashMap<Integer,Food> fooditem= new HashMap<>();
     //private float rewardPoints,Bill;
     private float Bill;
     private int discount; //keep it 0 or set according to query 4
@@ -212,12 +223,6 @@ class restaurant extends User
         super.setRewardpoints(0);
         Bill=0;
     }
-
-//
-//    public void setRewardPoints(float rewardPoints) {
-//        this.rewardPoints = rewardPoints;
-//    }
-
 
 
     public float getBill() {
@@ -273,7 +278,7 @@ class restaurant extends User
 
     float DiscR(float a)
     {
-      return a;
+      return (float) (a+0.0);
     }
 
     public float getreward(float a)
@@ -310,7 +315,8 @@ class FastFoodR extends restaurant{
     float DiscR(float a)
     {
         int d=getDiscount();
-        return ((100-d)/100)*a;
+        float v = (float) ((float)(100 - d) / 100) * a;
+        return v;
 
     }
     FastFoodR(String name, String add, int r)
@@ -325,6 +331,11 @@ class FastFoodR extends restaurant{
 
 class AuthenticR extends restaurant{
     Scanner in=new Scanner(System.in);
+
+    AuthenticR(String name, String add, int r)
+    {
+        super.setnameadd(name,add,0);
+    }
 
     @Override
     public float getreward(float a) {
@@ -342,17 +353,13 @@ class AuthenticR extends restaurant{
     float DiscR(float a)
     {
         int d=getDiscount();
-        float c= ((100-d)/100)*a;
+        float c= (float)((float)(100-d)/100)*a;
         if(c>100)
-            return c-50;
+            return (float) (c-50.0);
         else
             return c;
     }
 
-    AuthenticR(String name, String add, int r)
-    {
-        super.setnameadd(name,add,0);
-    }
     @Override
     public String toString() {
         return(this.getName()+" ( Authentic Restaurant)");
@@ -403,9 +410,6 @@ public class harsh2019423 {
     public static void main(String[] args)
     {
         Scanner in=new Scanner(System.in);
-        System.out.println("First line");
-        Food f=new Food("Idli",12,32,1,5);
-        System.out.println(f);
 
         //User[] U =new User[10];
         Customer[] C= new Customer[5];

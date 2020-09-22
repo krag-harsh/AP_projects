@@ -57,11 +57,6 @@ public class Food {
         this.quantity = quantity;
     }
 
-    public int getCategory() {  //"Starter", "Main Course", "Dessert", "Beverage"
-        return category;
-    }
-
-
     public void setCategory(int category) {
         this.category = category;
         if(category==1)

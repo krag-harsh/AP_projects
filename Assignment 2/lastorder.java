@@ -12,7 +12,7 @@ public class lastorder {
 
     @Override
     public String toString() {
-        return ("There were few items, Total Quantity: " + quantity + "for Rs " + price+" from Restaurant " +restaurant
+        return ("There were few items, Total Quantity: " + quantity + " for Rs " + price+" from Restaurant " +restaurant
         +" With delivery charge: "+deliverycharge);
 
     }

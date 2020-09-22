@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class WorkingC {
-    restaurant r[];
-    Customer c[];
+    restaurant[] r;
+    Customer[] c;
     restaurant selectedres;
     working w;
     int i,j,totalquantity=0;  //index of customer and restaurant selected
@@ -27,7 +27,7 @@ public class WorkingC {
         selectedres=r[j];
         for (int f : selectedres.fooditem.keySet())
         {
-            System.out.println(f+" " +selectedres.fooditem.get(f));
+            System.out.println(selectedres.fooditem.get(f));
         }
         System.out.println("Choose item by unique code");
         int unc=in.nextInt();
@@ -47,7 +47,11 @@ public class WorkingC {
         for(int t=0;t<numberofitem;t++)
         {
             System.out.println(f[t]);
-            float indvalue=(f[t].getPrice()*qua[t])*(100-f[t].getOffer())/100;
+            float mul=(float)(qua[t]*f[t].getPrice());
+            float sub=100-f[t].getOffer();
+            float a=sub/100;
+            float indvalue= a*mul;
+
             totalquantity+=qua[t];
             value+=indvalue;
         }
@@ -67,35 +71,44 @@ public class WorkingC {
     }
     void updateafterpayment(float paytoapp,Customer indc,restaurant indr,float rewardcollectedinthisorder,float backupbill,int deliverycharges)
     {
-        indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
+       // indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
         indr.setRewardpoints(indr.getRewardpoints()+rewardcollectedinthisorder);
         lastorder l=new lastorder(indr.getName(),totalquantity,backupbill,deliverycharges);
+        lastorder[] li =indc.getLi();
+        li[indc.getCartindex()]=l;
         totalquantity=0;
 
+        indc.setNumberoforder();
         w.setDeliverychargecollected(w.getDeliverychargecollected()+deliverycharges);
-        w.setTotalbalance(w.getTotalbalance()+paytoapp);
+        float pay= w.getTotalbalance()+paytoapp;
+        w.setTotalbalance(pay);
+
     }
 
     void checkoutcart(Customer indc, restaurant indr)
     {
         Scanner in=new Scanner(System.in);
-        float bill=0,rewardcollectedinthisorder;
-        bill=this.billwithoutdiscounts(indc.getCart(),indc.getQuantity(),indc.getCartindex());
+        float rewardcollectedinthisorder;
+        float bill = billwithoutdiscounts(indc.getCart(), indc.getQuantity(), indc.getCartindex());
+        System.out.println("After coming from first function value of bill= "+bill);
         bill=indr.DiscR(bill);
-        bill-=indc.DiscC(bill);
-        float paytoapp=bill/100;
-        int deliverycharges=indc.getdeliverycharges();
+        //System.out.println("After getting the restaurant discount bill= "+bill);
+        bill=bill-indc.DiscC(bill);
+        //System.out.println("After customer discount bill= "+bill);
+        float paytoapp=(bill/100);
+        //System.out.println("pay to company= "+paytoapp);
+
         rewardcollectedinthisorder=indr.getreward(bill);
+        //System.out.println("Reward collected in this order= "+rewardcollectedinthisorder);
 
-
+        int deliverycharges=indc.getdeliverycharges();
         System.out.println("Delivery charges - "+deliverycharges);
         System.out.println("Total order value : "+bill);
         System.out.println("Enter 1 to checkout : ");
         int choice=in.nextInt();
-        float backupbill=0;
+        float backupbill;
         if(choice==1)
         {
-            //System.out.println("You earned : "+rewardcollectedinthisorder+" reward points");
 
             if(indc.getRewardpoints()+indc.getWallet()+rewardcollectedinthisorder>=bill+deliverycharges)
             {
@@ -106,12 +119,7 @@ public class WorkingC {
                 indc.setRewardpoints(0);
                 indc.setWallet(indc.getWallet()-bill);
 
-
                 updateafterpayment(paytoapp,indc,indr,rewardcollectedinthisorder,backupbill,deliverycharges);
-
-//                indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
-//                indr.setRewardpoints(indr.getRewardpoints()+rewardcollectedinthisorder);
-//                lastorder l=new lastorder(indr.getName(),totalquantity,backupbill,deliverycharges);
 
             }
             else

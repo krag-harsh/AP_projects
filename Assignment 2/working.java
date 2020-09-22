@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class working {
-    restaurant r[];
-    Customer c[];
+    restaurant[] r;
+    Customer[] c;
     float totalbalance=0;
     int deliverychargecollected=0;
     working(Customer[] c,restaurant[] r)
