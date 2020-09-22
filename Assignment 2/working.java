@@ -17,7 +17,7 @@ public class working {
 
     public void setTotalbalance(float totalbalance) {
         this.totalbalance = totalbalance;
-        //System.out.println("inside working after update= "+ this.totalbalance);
+
     }
 
     public int getDeliverychargecollected() {

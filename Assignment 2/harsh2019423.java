@@ -50,9 +50,6 @@ class Customer extends User
         super.setRewardpoints(0);
     }
 
-    public int getNumberoforder() {
-        return numberoforder;
-    }
 
     public void setNumberoforder() {
         this.numberoforder++;

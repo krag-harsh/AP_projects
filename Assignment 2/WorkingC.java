@@ -71,7 +71,7 @@ public class WorkingC {
     }
     void updateafterpayment(float paytoapp,Customer indc,restaurant indr,float rewardcollectedinthisorder,float backupbill,int deliverycharges)
     {
-       // indc.setRewardpoints( indc.getRewardpoints()+rewardcollectedinthisorder);
+
         indr.setRewardpoints(indr.getRewardpoints()+rewardcollectedinthisorder);
         lastorder l=new lastorder(indr.getName(),totalquantity,backupbill,deliverycharges);
         lastorder[] li =indc.getLi();
@@ -80,12 +80,8 @@ public class WorkingC {
 
         indc.setNumberoforder();
         w.setDeliverychargecollected(w.getDeliverychargecollected()+deliverycharges);
-        System.out.println("paying to app addition= "+paytoapp);
         float pay= w.getTotalbalance()+paytoapp;
-        System.out.println("updated one= "+pay);
         w.setTotalbalance(pay);
-
-
     }
 
     void checkoutcart(Customer indc, restaurant indr)
@@ -162,7 +158,6 @@ public class WorkingC {
                     break;
                 case 2:
                     this.checkoutcart(c[i],selectedres);
-                    System.out.println("value of pay after addition= "+w.getTotalbalance());
                     break;
                 case 3:
                     System.out.println("Total rewards - "+c[i].getRewardpoints());
