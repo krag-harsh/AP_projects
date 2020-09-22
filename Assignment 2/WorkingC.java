@@ -80,8 +80,11 @@ public class WorkingC {
 
         indc.setNumberoforder();
         w.setDeliverychargecollected(w.getDeliverychargecollected()+deliverycharges);
+        System.out.println("paying to app addition= "+paytoapp);
         float pay= w.getTotalbalance()+paytoapp;
+        System.out.println("updated one= "+pay);
         w.setTotalbalance(pay);
+
 
     }
 
@@ -92,14 +95,9 @@ public class WorkingC {
         float bill = billwithoutdiscounts(indc.getCart(), indc.getQuantity(), indc.getCartindex());
         System.out.println("After coming from first function value of bill= "+bill);
         bill=indr.DiscR(bill);
-        //System.out.println("After getting the restaurant discount bill= "+bill);
         bill=bill-indc.DiscC(bill);
-        //System.out.println("After customer discount bill= "+bill);
         float paytoapp=(bill/100);
-        //System.out.println("pay to company= "+paytoapp);
-
         rewardcollectedinthisorder=indr.getreward(bill);
-        //System.out.println("Reward collected in this order= "+rewardcollectedinthisorder);
 
         int deliverycharges=indc.getdeliverycharges();
         System.out.println("Delivery charges - "+deliverycharges);
@@ -164,6 +162,7 @@ public class WorkingC {
                     break;
                 case 2:
                     this.checkoutcart(c[i],selectedres);
+                    System.out.println("value of pay after addition= "+w.getTotalbalance());
                     break;
                 case 3:
                     System.out.println("Total rewards - "+c[i].getRewardpoints());
@@ -186,4 +185,5 @@ public class WorkingC {
         }while (q>0 && q<5);
 
     }
+
 }

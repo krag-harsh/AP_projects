@@ -35,7 +35,6 @@ class User
 
 class Customer extends User
 {
-    //private float wallet,rewardPoints,bill;
     private float wallet;
     private lastorder[] li =new lastorder[10];
     private Food[] cart=new Food[10];
@@ -49,7 +48,6 @@ class Customer extends User
         cartindex=0;
         wallet=1000;
         super.setRewardpoints(0);
-        //numberofitemincart=0;
     }
 
     public int getNumberoforder() {
@@ -112,9 +110,6 @@ class Customer extends User
         return li;
     }
 
-    public void setLi(lastorder[] li) {
-        this.li = li;
-    }
 }
 
 class NormalC extends Customer{
@@ -426,8 +421,10 @@ public class harsh2019423 {
         R[3]=new FastFoodR("Wang's","Delhi",4);
         R[4]=new NormalR("Paradise","Delhi",0);
 
+        WorkingR wr=new WorkingR(R);
+        working wo =new working(C,R);
+        WorkingC wc=new WorkingC(C,R,wo);
         int q;
-
         do {
             System.out.println("Welcome to Zotato:\n" +
                     "\t1) Enter as Restaurant Owner\n" +
@@ -436,9 +433,6 @@ public class harsh2019423 {
                     "\t4) Company Account details\n" +
                     "\t5) Exit\n");
             q=in.nextInt();
-            WorkingR wr=new WorkingR(R);
-            working w =new working(C,R);
-            WorkingC wc=new WorkingC(C,R,w);
 
             switch (q)
             {
@@ -449,14 +443,16 @@ public class harsh2019423 {
                     wc.Cmenu();
                     break;
                 case 3:
-                    w.userdetails();
+                    wo.userdetails();
                     break;
                 case 4:
-                    w.accountdetails();
+                    wo.accountdetails();
                     break;
                 case 5:
-                    System.out.println("-----Thanks for using the application-----");
+                    System.out.println("----------Thanks for using the application----------");
                     break;
+                default:
+                    System.out.println("please enter different value");
             }
 
         }while (q>0 && q<5);

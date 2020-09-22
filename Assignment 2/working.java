@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class working {
     restaurant[] r;
     Customer[] c;
-    float totalbalance=0;
-    int deliverychargecollected=0;
+    private float totalbalance;
+    private int deliverychargecollected;
     working(Customer[] c,restaurant[] r)
     {
         this.r=r;
@@ -17,6 +17,7 @@ public class working {
 
     public void setTotalbalance(float totalbalance) {
         this.totalbalance = totalbalance;
+        //System.out.println("inside working after update= "+ this.totalbalance);
     }
 
     public int getDeliverychargecollected() {
@@ -59,8 +60,8 @@ public class working {
 
     void accountdetails()
     {
-        System.out.println("Total Company balance - INR "+totalbalance+"/-\n" +
-                "Total Delivery Charges Collected - INR "+deliverychargecollected+"/-");
+        System.out.println("Total Company balance - INR "+ this.totalbalance +"/-\n" +
+                "Total Delivery Charges Collected - INR "+this.getDeliverychargecollected()+"/-");
 
     }
 
