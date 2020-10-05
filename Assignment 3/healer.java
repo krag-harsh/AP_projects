@@ -32,11 +32,12 @@ public class healer extends player {
                     System.out.println("The person you choose is dead choose again");
                 else
                     return inp;
-                    break;
+                    //break;
             }
         }
         else
         {
+            System.out.println("Detectives selected someone to test on");
             while (true)
             {
                 inp=rand.nextInt(p.length);

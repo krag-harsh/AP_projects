@@ -18,13 +18,13 @@ public class mafia extends player {
 
     public int choose(mafia[] m, player[] p,int indexofuser)
     {
-        System.out.println("inside mchoose functino");
+
         Scanner in = new Scanner(System.in);
         Random rand=new Random();
         int inp;
         if(p[indexofuser].equals(m[0])  && p[indexofuser].isIsalive())
         {
-            while (true)
+            while(true)
             {
                 System.out.println("Choose player to kill :");
                 inp=in.nextInt();
@@ -32,28 +32,30 @@ public class mafia extends player {
                 if(p[inp].equals(m[0]))
                 {
                     System.out.println("You cannot choose another mafia\nTry again :");
+                    continue;
                     //System.out.println("Player is also a mafia select other player");
                 }
                 else if(!p[inp].isIsalive())
                     System.out.println("The person you choose is dead choose again");
                 else
                     return inp;
-                    break;
+                    //break;
             }
         }
         else
         {
+            System.out.println("Mafias are selecting target");
             while (true)
             {
-                System.out.println("Mafias are selecting target");
                 inp=rand.nextInt(p.length);
-                System.out.println(inp);
-                System.out.println(p[inp].equals(m[0]));
+               // System.out.println(inp);
+                //System.out.println(p[inp].equals(m[0]));
                 if(p[inp].equals(m[0]))
                     continue;
                 else if(!p[inp].isIsalive())
                 {
-                    System.out.println(p[inp].isIsalive());
+                    //System.out.println(p[inp].isIsalive());
+                    continue;
                 }
                 else
                     return inp;
@@ -61,7 +63,7 @@ public class mafia extends player {
             }
         }
 
-        return inp;
+        //return inp;
     }
 
 

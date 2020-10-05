@@ -234,12 +234,13 @@ public class game {
 
     public void play()
     {
-        System.out.println("Inside play function");
-        int indmafia=m[0].choose(m,p,indexofuser); //check if mafias still playing
+        //System.out.println("Inside play function");
+        int indmafia=m[0].choose(m,p,indexofuser);
         int inddetective=d[0].choose(d,p,indexofuser);
         int indhealer=h[0].choose(h,p,indexofuser);
         int che=killedbymafia(indmafia,inddetective,indhealer);
 
+        System.out.println("--End of actions--");
         if(p[indmafia].getHP()<1)   //killed by mafia
         {
             System.out.println("Player "+(indmafia+1)+" was killed");
@@ -261,6 +262,8 @@ public class game {
 
         if(che==-1)  //caught mafia therefore no voting will happen
         {
+            System.out.println("Mafia was caught by detective this time hence no voting");
+            System.out.println("Mafia was player "+(inddetective+1));
             p[inddetective].setIsalive(false);
             leftm--;
             aliveplayers--;
@@ -284,6 +287,42 @@ public class game {
             aliveplayers--;
             clearvoting();
 
+        }
+
+    }
+
+
+    public void rounds()
+    {
+        int r=1;
+        while(true)
+        {
+            if(leftm>=(leftcom+leftd+lefth))
+            {
+                System.out.println("------Mafia's won------");
+                break;
+            }
+            else if(leftm==0)
+            {
+                System.out.println("Mafia's lost");
+                break;
+            }
+            else {
+                System.out.println("\n\nRound "+r+" Starts");
+                play();
+                System.out.println("End of Round "+r);
+                r++;
+                if(leftm>=(leftcom+leftd+lefth))
+                {
+                    System.out.println("------Mafia's won------");
+                    break;
+                }
+                else if(leftm==0)
+                {
+                    System.out.println("Mafia's lost");
+                    break;
+                }
+            }
         }
 
     }

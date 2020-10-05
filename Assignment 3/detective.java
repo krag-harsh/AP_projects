@@ -25,9 +25,9 @@ public class detective extends player
         int inp;
         if(p[indexofuser].equals(d[0])  && p[indexofuser].isIsalive())
         {
+            System.out.println("Choose a player to test :");
             while (true)
             {
-                System.out.println("Choose a player to test :");
                 inp=in.nextInt();
                 inp--;
                 if(p[inp].equals(d[0]) )
@@ -38,11 +38,12 @@ public class detective extends player
                     System.out.println("The person you choose is dead choose again");
                 else
                     return inp;
-                break;
+                //break;
             }
         }
         else
         {
+            System.out.println("Detectives selected someone to test on");
             while (true)
             {
                 inp=rand.nextInt(p.length);
@@ -53,9 +54,9 @@ public class detective extends player
                 else
                     //return inp;
                     break;
-
             }
         }
+
         return inp;
 
     }
