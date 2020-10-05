@@ -3,6 +3,9 @@ public class commoner extends player {
     {
         setUniqueID(getCountofunid());
         setCountofunid(getCountofunid()+1);
+        setIsalive(true);
+        setHP(1000);
     }
+
 
 }
