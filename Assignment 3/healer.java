@@ -2,13 +2,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class healer extends player {
-    public void healer()
+    public healer()
     {
         setUniqueID(getCountofunid());
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(800);
         setVoted(0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj!=null && getClass()==obj.getClass());
     }
 
     public int choose(healer[] h, player[] p,int indexofuser)

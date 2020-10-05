@@ -3,13 +3,18 @@ import java.util.Scanner;
 
 public class detective extends player
 {
-    public void detective()
+    public detective()
     {
         setUniqueID(getCountofunid());
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(800);
         setVoted(0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj!=null && getClass()==obj.getClass());
     }
 
 

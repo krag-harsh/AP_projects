@@ -2,17 +2,23 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class mafia extends player {
-    public void mafia()
+    public mafia()
     {
-        setUniqueID(getCountofunid());
-        setCountofunid(getCountofunid()+1);
-        setIsalive(true);
-        setHP(2500);
-        setVoted(0);
+        super.setUniqueID(getCountofunid());
+        super.setCountofunid(getCountofunid()+1);
+        super.setIsalive(true);
+        super.setHP(2500);
+        super.setVoted(0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj!=null && getClass()==obj.getClass());
     }
 
     public int choose(mafia[] m, player[] p,int indexofuser)
     {
+        System.out.println("inside mchoose functino");
         Scanner in = new Scanner(System.in);
         Random rand=new Random();
         int inp;
@@ -39,14 +45,19 @@ public class mafia extends player {
         {
             while (true)
             {
+                System.out.println("Mafias are selecting target");
                 inp=rand.nextInt(p.length);
+                System.out.println(inp);
+                System.out.println(p[inp].equals(m[0]));
                 if(p[inp].equals(m[0]))
                     continue;
                 else if(!p[inp].isIsalive())
-                    continue;
+                {
+                    System.out.println(p[inp].isIsalive());
+                }
                 else
-                    //return inp;
-                    break;
+                    return inp;
+                    //break;
             }
         }
 

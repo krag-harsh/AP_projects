@@ -67,7 +67,8 @@ public class harsh2019423 {
         }while (N<6);
         player[] p =new player[N];
         game g=new game(N,p);
-        g.play();
+
+       // g.play();
 
 
     }

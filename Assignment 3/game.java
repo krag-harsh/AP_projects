@@ -14,11 +14,11 @@ public class game {
     int indexofuser;
     int leftm,leftd,lefth,leftcom,aliveplayers;
 
-    public game(int N, player[] p)
+    public game(int totalnumber, player[] passed)
     {
-        this.N=N;
+        this.N=totalnumber;
         aliveplayers=N;
-        this.p=p;
+        this.p=passed;
         System.out.println("Choose a Character\n" +
                 "\t1) Mafia\n" +
                 "\t2) Detective\n" +
@@ -80,30 +80,30 @@ public class game {
         for(i=0;i<nom;i++)
         {
             p[i]=new mafia();
+            //System.out.println(p[i].isIsalive());
             m[i]=(mafia)p[i];
             if(choice==1)
-                System.out.println("Player "+(i+1)+"is a mafia");
+                System.out.println("Player "+(i+1)+" is a mafia");
         }
         for(i=0;i<nod;i++)
         {
             p[i+nom]=new detective();
             d[i]=(detective)p[i+nom];
             if(choice==2)
-                System.out.println("Player "+(i+1+nom)+"is a detective");
+                System.out.println("Player "+(i+1+nom)+" is a detective");
         }
         for(i=0;i<noh;i++)
         {
             p[i+nom+nod]=new healer();
             h[i]=(healer) p[i+nom+nod];
             if(choice==3)
-                System.out.println("Player "+(i+1+nom+nod)+"is a healer");
+                System.out.println("Player "+(i+1+nom+nod)+" is a healer");
         }
         for(i=0;i<nocommon;i++)
         {
             p[i+nom+nod+noh]=new commoner();
             c[i]=(commoner) p[i+nom+nod+noh];
         }
-
 
     }
 
@@ -234,6 +234,7 @@ public class game {
 
     public void play()
     {
+        System.out.println("Inside play function");
         int indmafia=m[0].choose(m,p,indexofuser); //check if mafias still playing
         int inddetective=d[0].choose(d,p,indexofuser);
         int indhealer=h[0].choose(h,p,indexofuser);
