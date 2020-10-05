@@ -8,6 +8,7 @@ public class healer extends player {
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(800);
+        setVoted(0);
     }
 
     public int choose(healer[] h, player[] p,int indexofuser)

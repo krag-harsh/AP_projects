@@ -8,6 +8,7 @@ public class mafia extends player {
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(2500);
+        setVoted(0);
     }
 
     public int choose(mafia[] m, player[] p,int indexofuser)

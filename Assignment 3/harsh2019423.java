@@ -6,6 +6,15 @@ abstract class player
     private int uniqueID;
     private boolean isalive;
     private double HP;
+    private int voted;
+
+    public int getVoted() {
+        return voted;
+    }
+
+    public void setVoted(int voted) {
+        this.voted = voted;
+    }
 
     public static int getCountofunid() {
         return countofunid;

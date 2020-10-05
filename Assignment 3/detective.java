@@ -9,6 +9,7 @@ public class detective extends player
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(800);
+        setVoted(0);
     }
 
 

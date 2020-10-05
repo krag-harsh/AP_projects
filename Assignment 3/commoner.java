@@ -5,6 +5,7 @@ public class commoner extends player {
         setCountofunid(getCountofunid()+1);
         setIsalive(true);
         setHP(1000);
+        setVoted(0);
     }
 
 

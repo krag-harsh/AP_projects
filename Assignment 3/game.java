@@ -12,11 +12,12 @@ public class game {
     int choice;
     int nom,nod,noh,nocommon;
     int indexofuser;
-    int leftm,leftd,lefth,leftcom;
+    int leftm,leftd,lefth,leftcom,aliveplayers;
 
     public game(int N, player[] p)
     {
         this.N=N;
+        aliveplayers=N;
         this.p=p;
         System.out.println("Choose a Character\n" +
                 "\t1) Mafia\n" +
@@ -163,27 +164,124 @@ public class game {
         return returnvalue;
     }
 
+    public void takevoting()
+    {
+        Scanner in = new Scanner(System.in);
+        Random rand=new Random();
+        for(int i=0;i<N;i++)
+        {
+            if(p[i].isIsalive())
+            {
+                if(i==indexofuser)
+                {
+                    while (true)
+                    {
+                        System.out.println("Choose player to you want to vote out :");
+                        int inp=in.nextInt();
+                        inp--;
+                        if(!p[inp].isIsalive())
+                            System.out.println("The person you voted for is dead vote again");
+                        else
+                        {
+                            p[inp].setVoted(p[inp].getVoted()+1);
+                            break;
+                        }
+
+                    }
+
+                }
+                else {
+                    while (true)
+                    {
+                        int inp=rand.nextInt(N);
+                        if(p[inp].isIsalive())
+                        {
+                            p[inp].setVoted(p[inp].getVoted()+1);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public int checkvoting()
+    {
+        int ind=0;
+        int maxvote=0;
+        for(int i=0;i<N;i++)
+        {
+            if(p[i].isIsalive())
+            {
+                if(p[i].getVoted()>maxvote)
+                {
+                    ind=i;
+                    maxvote=p[i].getVoted();
+                }
+            }
+        }
+        return ind;
+    }
+
+    public void clearvoting()
+    {
+        for(int i=0;i<N;i++)
+        {
+            p[i].setVoted(0);
+        }
+    }
+
     public void play()
     {
         int indmafia=m[0].choose(m,p,indexofuser); //check if mafias still playing
         int inddetective=d[0].choose(d,p,indexofuser);
         int indhealer=h[0].choose(h,p,indexofuser);
-        int c=killedbymafia(indmafia,inddetective,indhealer);
+        int che=killedbymafia(indmafia,inddetective,indhealer);
 
         if(p[indmafia].getHP()<1)   //killed by mafia
         {
-
+            System.out.println("Player "+(indmafia+1)+" was killed");
+            p[indmafia].setIsalive(false);
+            p[indmafia].setHP(0);
+            //see category and reduce from it
+            if(p[indmafia].equals(d[0]))
+                leftd--;
+            else if(p[indmafia].equals(h[0]))
+                lefth--;
+            else if(p[indmafia].equals(c[0]))
+                leftcom--;
+            aliveplayers--;
         }
         else        //either saved by doctor or mafia was unable to kill
         {
-
+            System.out.println("Nobody was killed");
         }
 
-        if(c==-1)  //caught mafia
+        if(che==-1)  //caught mafia therefore no voting will happen
         {
+            p[inddetective].setIsalive(false);
+            leftm--;
+            aliveplayers--;
+            //print according to user
 
         }
         else {
+            takevoting();       //voting will occur
+            int indexr=checkvoting();
+            System.out.println("Player "+(indexr+1)+" was voted out");
+            p[indexr].setIsalive(false);
+            p[indexr].setHP(0);
+            //see category and reduce from it
+            if(p[indexr].equals(d[0]))
+                leftd--;
+            else if(p[indexr].equals(h[0]))
+                lefth--;
+            else if(p[indexr].equals(c[0]))
+                leftcom--;
+
+            aliveplayers--;
+            clearvoting();
 
         }
 
