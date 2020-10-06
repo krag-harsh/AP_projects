@@ -124,7 +124,7 @@ public class game {
 
         hpofmafiatarget=p[indexmafia].getHP();
 //        if(totalhpofmafia>hpofmafiatarget)
-        if(!p[0].compareTo(p[indexmafia],totalhpofmafia))
+        if(p[0].compareTo(p[indexmafia],totalhpofmafia))
         {
             double reduceforeachmafia=0;
             if(leftm>0)
