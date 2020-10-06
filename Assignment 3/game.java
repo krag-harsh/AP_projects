@@ -131,25 +131,31 @@ public class game {
             reduceforeachmafia=hpofmafiatarget/leftm;
             int count=leftm;
             p[indexmafia].setHP(0);
-            for(int i=0;i<nom;i++)
+            while(hpofmafiatarget>1)
             {
-                if(m[i].isIsalive())
-                {
-                    if(m[i].getHP()>=reduceforeachmafia) {
-                        m[i].setHP(m[i].getHP() - reduceforeachmafia);
-                        hpofmafiatarget -= reduceforeachmafia;
-                        count--;
-                    }
-                    else
+                    count=leftm;
+                    if(leftm>0)
+                        reduceforeachmafia=hpofmafiatarget/leftm;
+                    for(int i=0;i<nom;i++)
                     {
-                        hpofmafiatarget-=m[i].getHP();
-                        m[i].setHP(0);
-                        count--;
-                        if(count!=0)
-                        reduceforeachmafia=hpofmafiatarget/count;
-                    }
+                        if(m[i].isIsalive())
+                        {
+                            if(m[i].getHP()>=reduceforeachmafia) {
+                                m[i].setHP(m[i].getHP() - reduceforeachmafia);
+                                hpofmafiatarget -= reduceforeachmafia;
+                                count--;
+                            }
+                            else
+                            {
+                                hpofmafiatarget-=m[i].getHP();
+                                m[i].setHP(0);
+                                count--;
+                                if(count!=0)
+                                    reduceforeachmafia=hpofmafiatarget/count;
+                            }
 
-                }
+                        }
+                    }
             }
         }
         else {
@@ -212,8 +218,7 @@ public class game {
         }
     }
 
-
-    public int checkvoting()
+    public int indexofmaxvote()
     {
         int ind=0;
         int maxvote=0;
@@ -227,6 +232,30 @@ public class game {
                     maxvote=p[i].getVoted();
                 }
             }
+        }
+
+        for(int i=0;i<N;i++)
+        {
+            if(p[i].getVoted()==maxvote && i!=ind && p[i].isIsalive())
+            {  //we have to revote till we get the max vote
+//                clearvoting();
+//                takevoting();
+                return -1;
+
+            }
+        }
+        return ind;
+    }
+
+    public int checkvoting()
+    {
+        int ind;
+        ind=indexofmaxvote();
+        while(ind==-1)
+        {
+            clearvoting();
+            takevoting();
+            ind=indexofmaxvote();
         }
         return ind;
     }
@@ -242,9 +271,22 @@ public class game {
     public void play()
     {
         //System.out.println("Inside play function");
-        int indmafia=m[0].choose(m,p,indexofuser);
-        int inddetective=d[0].choose(d,p,indexofuser);
-        int indhealer=h[0].choose(h,p,indexofuser);
+        int indmafia,inddetective,indhealer;
+        if(leftm>0)
+            indmafia=m[0].choose(m,p,indexofuser);
+        else
+            indmafia=N-1;
+
+        if(leftd>0)
+            inddetective=d[0].choose(d,p,indexofuser);
+        else
+            inddetective=N-1;
+
+        if(lefth>0)
+            indhealer=h[0].choose(h,p,indexofuser);
+        else
+            indhealer=nom+nod;
+
         int che=killedbymafia(indmafia,inddetective,indhealer);
 
         System.out.println("--End of actions--");
@@ -311,7 +353,7 @@ public class game {
         {
             if(leftm>=(leftcom+leftd+lefth))
             {
-                System.out.println("------Mafia's won------");
+                System.out.println("\n------Mafia's won------");
                 break;
             }
             else if(leftm==0)
@@ -333,7 +375,7 @@ public class game {
                 }
                 if(leftm>=(leftcom+leftd+lefth))
                 {
-                    System.out.println("------Mafia's won------");
+                    System.out.println("\n------Mafia's won------");
                     break;
                 }
                 else if(leftm==0)
