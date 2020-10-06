@@ -37,7 +37,7 @@ public class healer extends player {
         }
         else
         {
-            System.out.println("Detectives selected someone to test on");
+            System.out.println("Healer selected someone to heal");
             while (true)
             {
                 inp=rand.nextInt(p.length);

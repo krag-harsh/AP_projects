@@ -264,6 +264,10 @@ public class game {
         {
             System.out.println("Mafia was caught by detective this time hence no voting");
             System.out.println("Mafia was player "+(inddetective+1));
+            if(p[indexofuser].equals(d[0]))
+            {
+                System.out.println("You choose correct person");
+            }
             p[inddetective].setIsalive(false);
             leftm--;
             aliveplayers--;
@@ -283,10 +287,11 @@ public class game {
                 lefth--;
             else if(p[indexr].equals(c[0]))
                 leftcom--;
+            else if(p[indexr].equals(m[0]))
+                leftm--;
 
             aliveplayers--;
             clearvoting();
-
         }
 
     }
@@ -308,10 +313,17 @@ public class game {
                 break;
             }
             else {
-                System.out.println("\n\nRound "+r+" Starts");
+                System.out.println("\n\n--------Round "+r+" Starts--------");
                 play();
                 System.out.println("End of Round "+r);
                 r++;
+                //printing alive players after each round
+                System.out.println("Alive players");
+                for(int i=0;i<N;i++)
+                {
+                    if(p[i].isIsalive())
+                        System.out.print("   Player "+(i+1));
+                }
                 if(leftm>=(leftcom+leftd+lefth))
                 {
                     System.out.println("------Mafia's won------");
@@ -319,7 +331,7 @@ public class game {
                 }
                 else if(leftm==0)
                 {
-                    System.out.println("Mafia's lost");
+                    System.out.println("\n--------Mafia's lost--------");
                     break;
                 }
             }
