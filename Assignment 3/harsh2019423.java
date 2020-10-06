@@ -1,12 +1,24 @@
 import java.util.Scanner;
 
-abstract class player
+interface Comparable<T>{
+    public boolean compareTo(T other, double other2);
+}
+
+abstract class player implements Comparable<player>
 {
     private static int countofunid=0;
     private int uniqueID;
     private boolean isalive;
     private double HP;
     private int voted;
+
+    @Override
+    public boolean compareTo(player other, double other2)
+    {
+        return (other.getHP()<other2);
+
+    }
+
 
     public int getVoted() {
         return voted;

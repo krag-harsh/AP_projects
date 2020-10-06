@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.lang.Math;
 import java.util.Random;
 
+
 public class game {
     final int N;
     player[] p;
@@ -122,7 +123,8 @@ public class game {
         }
 
         hpofmafiatarget=p[indexmafia].getHP();
-        if(totalhpofmafia>hpofmafiatarget)
+//        if(totalhpofmafia>hpofmafiatarget)
+        if(!p[0].compareTo(p[indexmafia],totalhpofmafia))
         {
             double reduceforeachmafia=0;
             if(leftm>0)
@@ -318,7 +320,7 @@ public class game {
                 System.out.println("End of Round "+r);
                 r++;
                 //printing alive players after each round
-                System.out.println("Alive players");
+                System.out.println("Number of Alive players "+(leftm+leftd+lefth+leftcom));
                 for(int i=0;i<N;i++)
                 {
                     if(p[i].isIsalive())
