@@ -180,6 +180,11 @@ public class game {
                     {
                         System.out.println("Choose player to you want to vote out :");
                         int inp=in.nextInt();
+                        if(inp>p.length || inp<1)
+                        {
+                            System.out.println("Enter valid player");
+                            continue;
+                        }
                         inp--;
                         if(!p[inp].isIsalive())
                             System.out.println("The person you voted for is dead vote again");

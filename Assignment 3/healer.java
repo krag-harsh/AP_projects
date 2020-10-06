@@ -27,6 +27,12 @@ public class healer extends player {
             {
                 System.out.println("Choose player to heal :");
                 inp=in.nextInt();
+                if(inp>p.length || inp<1)
+                {
+                    System.out.println("Enter valid player");
+                    continue;
+                }
+
                 inp--;
                 if(!p[inp].isIsalive())
                     System.out.println("The person you choose is dead choose again");

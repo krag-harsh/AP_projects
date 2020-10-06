@@ -29,6 +29,11 @@ public class detective extends player
             while (true)
             {
                 inp=in.nextInt();
+                if(inp>p.length || inp<1)
+                {
+                    System.out.println("Enter valid player");
+                    continue;
+                }
                 inp--;
                 if(p[inp].equals(d[0]) )
                 {

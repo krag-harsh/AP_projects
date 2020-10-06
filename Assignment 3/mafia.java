@@ -28,6 +28,11 @@ public class mafia extends player {
             {
                 System.out.println("Choose player to kill :");
                 inp=in.nextInt();
+                if(inp>p.length || inp<1)
+                {
+                    System.out.println("Enter valid player");
+                    continue;
+                }
                 inp--;
                 if(p[inp].equals(m[0]))
                 {
